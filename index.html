@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ücret Hesaplama - Koç Üniversitesi</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+    
+    body { 
+      font-family: 'Source Sans Pro', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      max-width: 900px; 
+      margin: 20px auto; 
+      padding: 20px; 
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+
+    /* Mobile-first responsive design */
+    @media (max-width: 768px) {
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f8f9fa;
+        max-width: 100%;
+      }
+
+      .header {
+        border-radius: 0 !important;
+        margin: 0;
+        box-shadow: none !important;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .university-logo {
+        width: 150px !important;
+      }
+
+      .header h1 {
+        font-size: 16px !important;
+      }
+
+      .chat-container {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        margin: 0;
+        min-height: calc(100vh - 80px);
+      }
+
+      #cf-context {
+        border-radius: 0 !important;
+        height: calc(100vh - 80px) !important;
+      }
+    }
+
+    .header {
+      background: linear-gradient(135deg, #A6192E 0%, #8a1426 100%);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .university-logo {
+      width: 200px;
+      height: auto;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 400;
+      text-align: right;
+    }
+
+    .chat-container {
+      background: white;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      min-height: 600px;
+      position: relative;
+    }
+
+    /* Chat interface styles */
+    #cf-context {
+      height: 600px;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+    }
+
+    /* Mobile-first responsive design */
+    @media (max-width: 768px) {
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f8f9fa;
+        max-width: 100%;
+      }
+
+      .header {
+        border-radius: 0 !important;
+        margin: 0;
+        box-shadow: none !important;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .university-logo {
+        width: 150px !important;
+      }
+
+      .header h1 {
+        font-size: 16px !important;
+      }
+
+      .chat-container {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        margin: 0;
+        min-height: calc(100vh - 80px);
+      }
+
+      #cf-context {
+        border-radius: 0 !important;
+        height: calc(100vh - 80px) !important;
+      }
+    }
+
+    /* Custom conversational form styles */
+    .cf-chat {
+      background: #f8f9fa !important;
+    }
+
+    .cf-chat .cf-chat-response {
+      background: #A6192E !important;
+      color: white !important;
+    }
+
+    .cf-chat .cf-chat-response-text {
+      color: white !important;
+    }
+
+    /* Fix button text visibility */
+    .cf-button {
+      background: #A6192E !important;
+      border-color: #A6192E !important;
+      color: white !important;
+    }
+
+    .cf-button:hover {
+      background: #8a1426 !important;
+      border-color: #8a1426 !important;
+      color: white !important;
+    }
+
+    /* Fix radio button labels */
+    .cf-radio-button {
+      background: #A6192E !important;
+      color: white !important;
+    }
+
+    .cf-radio-button:hover {
+      background: #8a1426 !important;
+      color: white !important;
+    }
+
+    .cf-input {
+      border-color: #A6192E !important;
+    }
+
+    .cf-input:focus {
+      border-color: #8a1426 !important;
+    }
+
+    /* Hide only the actual radio button circles, not the conversational interface */
+    input[type="radio"] {
+      opacity: 0 !important;
+      position: absolute !important;
+      pointer-events: none !important;
+    }
+
+    /* Hide ALL radio button elements in conversational form */
+    .cf-radio-button input[type="radio"],
+    .cf-input input[type="radio"],
+    .cf-list input[type="radio"],
+    .cf-chatlist input[type="radio"],
+    .cf-radio-button .cf-radio,
+    .cf-input .cf-radio,
+    .cf-list .cf-radio,
+    .cf-chatlist .cf-radio,
+    .cf-radio,
+    input.cf-radio,
+    .cf-input-radio,
+    .cf-radio-input {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      position: absolute !important;
+      left: -9999px !important;
+    }
+
+    /* Hide radio button icons and pseudo elements */
+    .cf-radio-button:before,
+    .cf-input:before,
+    .cf-list:before,
+    .cf-chatlist:before,
+    .cf-radio-button::before,
+    .cf-input::before,
+    .cf-list::before,
+    .cf-chatlist::before,
+    .cf-radio:before,
+    .cf-radio::before {
+      display: none !important;
+      content: none !important;
+    }
+
+    /* Global radio button hiding for conversational form */
+    #cf-context input[type="radio"],
+    #cf-context .cf-radio,
+    #cf-context .cf-input-radio,
+    .cf-chat input[type="radio"],
+    .cf-chat .cf-radio,
+    .cf-chat .cf-input-radio {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      position: absolute !important;
+      left: -9999px !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    /* Hide any radio button circles or indicators */
+    .cf-radio-button .cf-radio-circle,
+    .cf-input .cf-radio-circle,
+    .cf-list .cf-radio-circle,
+    .cf-chatlist .cf-radio-circle,
+    .cf-radio-button .cf-input-radio,
+    .cf-input .cf-input-radio,
+    .cf-list .cf-input-radio,
+    .cf-chatlist .cf-input-radio {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    /* Additional targeting for chat option buttons */
+    .cf-chat-response .cf-radio-button,
+    .cf-chat-response .cf-input,
+    .cf-chat-response .cf-list {
+      background: #A6192E !important;
+      border: none !important;
+      border-radius: 20px !important;
+      color: white !important;
+      padding: 10px 20px !important;
+      margin: 5px !important;
+      cursor: pointer !important;
+    }
+
+    .cf-chat-response .cf-radio-button:hover,
+    .cf-chat-response .cf-input:hover,
+    .cf-chat-response .cf-list:hover {
+      background: #8a1426 !important;
+    }
+
+    /* Remove any radio button styling from chat options */
+    .cf-chat-response input[type="radio"] {
+      display: none !important;
+    }
+
+    /* Keep the form visible but positioned off-screen for the library to work */
+    #tuition-form {
+      position: absolute !important;
+      left: -9999px !important;
+      visibility: hidden !important;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Result display styles */
+    .result-summary {
+      background: #f8e6e8;
+      border: 1px solid #e6b3ba;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px;
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #e6b3ba;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+      font-weight: bold;
+      font-size: 18px;
+      color: #A6192E;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <a href="index.html">
+        <img src="https://identity.hub.ku.edu.tr/resources/pvan7/login/kuhub/img/ku-logo.png" alt="Koç Üniversitesi Logo" class="university-logo">
+      </a>
+    </div>
+    <div>
+      <h1>Ücret Hesaplama Asistanı</h1>
+    </div>
+  </div>
+
+  <div class="chat-container">
+    <!-- Conversational form -->
+    <form id="tuition-form" cf-form>
+      <!-- Start greeting -->
+      <input cf-questions="Merhaba! 👋 Koç Üniversitesi ücret hesaplama asistanınızım. Size öğrenim ücretinizi hesaplayarak yardımcı olacağım." 
+             cf-label="Başlayalım!" type="radio" value="0">
+      Start
+      
+      <!-- Admit Year -->
+      <input cf-questions="Hangi yılda üniversiteye kabul aldınız? 🎓" 
+             type="radio" name="admitYear" value="2024" cf-label="2024">
+      <input type="radio" name="admitYear" value="2023" cf-label="2023">
+      <input type="radio" name="admitYear" value="2022" cf-label="2022">
+      <input type="radio" name="admitYear" value="2021" cf-label="2021">
+      <input type="radio" name="admitYear" value="2020" cf-label="2020">
+
+      <!-- Academic Program -->
+      <input cf-questions="Harika! 📚 Hangi akademik programa kayıtlı olduğunuzu öğrenebilir miyim?" 
+             type="radio" name="academicProgram" value="Other" cf-label="Diğer Programlar">
+      <input type="radio" name="academicProgram" value="School of Medicine" cf-label="Tıp Fakültesi">
+
+      <!-- Admit Type -->
+      <input cf-questions="Mükemmel! 🎯 Kabul tipinizi belirtir misiniz?" 
+             type="radio" name="admitType" value="LYS" cf-label="LYS">
+      <input type="radio" name="admitType" value="International" cf-label="Uluslararası">
+
+      <!-- LYS Scholarship -->
+      <input cf-questions="LYS burs durumunuzu belirtebilir misiniz?" 
+             type="radio" name="lysScholarship" value="None" cf-label="Burs Yok">
+      <input type="radio" name="lysScholarship" value="25%" cf-label="%25 Burs">
+      <input type="radio" name="lysScholarship" value="50%" cf-label="%50 Burs">
+      <input type="radio" name="lysScholarship" value="75%" cf-label="%75 Burs">
+
+      <!-- Waivers -->
+      <input cf-questions="Herhangi bir muafiyetiniz var mı? 💼" 
+             type="radio" name="waivers" value="None" cf-label="Muafiyet Yok">
+      <input type="radio" name="waivers" value="Koç Group Employee" cf-label="Koç Grubu Çalışanı">
+      <input type="radio" name="waivers" value="Koç Group Retiree" cf-label="Koç Grubu Emeklisi">
+
+      <!-- Sibling Discount -->
+      <input cf-questions="Kardeş indirimi durumunuz nedir? 👨‍👩‍👧‍👦" 
+             type="radio" name="siblingDiscount" value="None" cf-label="Kardeş İndirimi Yok">
+      <input type="radio" name="siblingDiscount" value="Yes" cf-label="Evet, kardeş indirimi var">
+
+      <!-- Citizenship -->
+      <input cf-questions="Vatandaşlık durumunuzu belirtir misiniz? 🌍" 
+             type="radio" name="citizenship" value="Turkish Citizen" cf-label="Türk Vatandaşı">
+      <input type="radio" name="citizenship" value="Other" cf-label="Diğer">
+
+      <!-- Payment Methods -->
+      <input cf-questions="Son olarak! Hangi ödeme yöntemini tercih edersiniz? 💳" 
+             type="radio" name="paymentMethods" value="Installments" cf-label="Taksitli Ödeme">
+      <input type="radio" name="paymentMethods" value="Single Payment" cf-label="Peşin Ödeme">
+    </form>
+
+    <!-- Chat interface container -->
+    <div id="cf-context" cf-context></div>
+  </div>
+
+  <!-- Results container -->
+  <div id="results-container" class="hidden"></div>
+
+  <!-- Include conversational form library -->
+  <script src='https://cdn.jsdelivr.net/gh/space10-community/conversational-form@latest/dist/conversational-form.min.js'></script>
+  
+  <script>
+    // Global variables
+    let tuitionData = [];
+    let conversationalForm = null;
+
+    // Load tuition data
+    async function loadTuitionData() {
+      try {
+        const response = await fetch('assets/fees.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        tuitionData = await response.json();
+        console.log('Tuition data loaded:', tuitionData.length, 'records');
+      } catch (error) {
+        console.error('Error loading tuition data:', error);
+        // Use fallback data
+        tuitionData = [
+          {
+            "Admit_Year": 2024,
+            "Academic_Program": "Other",
+            "Admit_Type": "LYS",
+            "Citizenship": "Turkish Citizen",
+            "Tuition_Fee": 1565000,
+            "Tuition_Fall": 782500,
+            "Tuition_Spring": 899875,
+            "Currency": "Turkish Lira"
+          },
+          {
+            "Admit_Year": 2024,
+            "Academic_Program": "School of Medicine", 
+            "Admit_Type": "LYS",
+            "Citizenship": "Turkish Citizen",
+            "Tuition_Fee": 2330000,
+            "Tuition_Fall": 1165000,
+            "Tuition_Spring": 1339750,
+            "Currency": "Turkish Lira"
+          }
+        ];
+      }
+    }
+
+    // Initialize when page loads
+    window.onload = async function() {
+      console.log('Window loaded');
+      
+      if (typeof window.cf === 'undefined') {
+        console.error('CF library not loaded');
+        document.getElementById('cf-context').innerHTML = '<p style="padding: 20px;">Library failed to load</p>';
+        return;
+      }
+      
+      console.log('CF library loaded successfully');
+      
+      // Load tuition data
+      await loadTuitionData();
+      
+      conversationalForm = window.cf.ConversationalForm.startTheConversation({
+        formEl: document.getElementById("tuition-form"),
+        context: document.getElementById("cf-context"),
+        submitCallback: function() {
+          console.log('Form submitted');
+          handleFormSubmission();
+        }
+      });
+      
+      console.log('CF initialized successfully');
+    };
+
+    // Handle form submission and calculate results
+    function handleFormSubmission() {
+      try {
+        console.log('Processing form submission...');
+        
+        // Get form data
+        const formDataSerialized = conversationalForm.getFormData(true);
+        console.log("Raw form data:", formDataSerialized);
+        console.log("Raw form data type check:", {
+          admitYear: typeof formDataSerialized.admitYear,
+          academicProgram: typeof formDataSerialized.academicProgram,
+          admitType: typeof formDataSerialized.admitType,
+          citizenship: typeof formDataSerialized.citizenship
+        });
+        
+        // Parse the form data (handle arrays from conversational form)
+        const selections = {
+          admitYear: parseInt(Array.isArray(formDataSerialized.admitYear) ? formDataSerialized.admitYear[0] : formDataSerialized.admitYear),
+          academicProgram: Array.isArray(formDataSerialized.academicProgram) ? formDataSerialized.academicProgram[0] : formDataSerialized.academicProgram,
+          admitType: Array.isArray(formDataSerialized.admitType) ? formDataSerialized.admitType[0] : formDataSerialized.admitType,
+          lysScholarship: Array.isArray(formDataSerialized.lysScholarship) ? formDataSerialized.lysScholarship[0] : (formDataSerialized.lysScholarship || 'None'),
+          waivers: Array.isArray(formDataSerialized.waivers) ? formDataSerialized.waivers[0] : formDataSerialized.waivers,
+          siblingDiscount: Array.isArray(formDataSerialized.siblingDiscount) ? formDataSerialized.siblingDiscount[0] : formDataSerialized.siblingDiscount,
+          citizenship: Array.isArray(formDataSerialized.citizenship) ? formDataSerialized.citizenship[0] : formDataSerialized.citizenship,
+          paymentMethods: Array.isArray(formDataSerialized.paymentMethods) ? formDataSerialized.paymentMethods[0] : formDataSerialized.paymentMethods
+        };
+
+        // If not LYS student, ensure lysScholarship is 'None'
+        if (selections.admitType !== 'LYS') {
+          selections.lysScholarship = 'None';
+        }
+
+        console.log("Parsed selections:", selections);
+        console.log("Available tuition data records:", tuitionData.length);
+        console.log("Sample tuition record:", tuitionData[0]);
+
+        // Find matching tuition data with detailed logging
+        console.log("Looking for match with criteria:");
+        console.log("- Admit_Year:", selections.admitYear);
+        console.log("- Academic_Program:", selections.academicProgram);
+        console.log("- Admit_Type:", selections.admitType);
+        console.log("- Citizenship:", selections.citizenship);
+
+        // Test with first record specifically
+        const firstRecord = tuitionData[0];
+        if (firstRecord) {
+          console.log("Testing against first record:", firstRecord);
+          console.log("First record test matches:", {
+            year: firstRecord.Admit_Year == selections.admitYear,
+            program: firstRecord.Academic_Program === selections.academicProgram,
+            type: firstRecord.Admit_Type === selections.admitType,
+            citizenship: firstRecord.Citizenship === selections.citizenship
+          });
+        }
+
+        const matchingData = tuitionData.find(item => {
+          const yearMatch = item.Admit_Year == selections.admitYear;
+          const programMatch = item.Academic_Program === selections.academicProgram;
+          const typeMatch = item.Admit_Type === selections.admitType;
+          const citizenshipMatch = item.Citizenship === selections.citizenship;
+          
+          console.log(`Checking record:`, {
+            dbRecord: item,
+            selections: selections,
+            matches: {
+              year: `${item.Admit_Year} == ${selections.admitYear} = ${yearMatch}`,
+              program: `"${item.Academic_Program}" === "${selections.academicProgram}" = ${programMatch}`,
+              type: `"${item.Admit_Type}" === "${selections.admitType}" = ${typeMatch}`,
+              citizenship: `"${item.Citizenship}" === "${selections.citizenship}" = ${citizenshipMatch}`
+            }
+          });
+          
+          return yearMatch && programMatch && typeMatch && citizenshipMatch;
+        });
+
+        console.log("Matching data found:", matchingData);
+
+        if (matchingData) {
+          conversationalForm.addRobotChatResponse("Mükemmel! 🧮 Şimdi ücretinizi hesaplıyorum...");
+          
+          setTimeout(() => {
+            const result = calculateTuitionFee(selections, matchingData);
+            displayResultsInChat(result);
+          }, 1500);
+        } else {
+          // Show available options for debugging
+          const availableYears = [...new Set(tuitionData.map(item => item.Admit_Year))].sort();
+          const availablePrograms = [...new Set(tuitionData.map(item => item.Academic_Program))];
+          const availableTypes = [...new Set(tuitionData.map(item => item.Admit_Type))];
+          const availableCitizenship = [...new Set(tuitionData.map(item => item.Citizenship))];
+          
+          console.log("Available years:", availableYears);
+          console.log("Available programs:", availablePrograms);
+          console.log("Available types:", availableTypes);
+          console.log("Available citizenship:", availableCitizenship);
+          
+          conversationalForm.addRobotChatResponse("😔 Üzgünüm, seçtiğiniz kriterlere uygun ücret bilgisi bulunamadı. Mevcut veriler kontrol ediliyor...");
+          
+          setTimeout(() => {
+            conversationalForm.addRobotChatResponse(`📋 Mevcut yıllar: ${availableYears.join(', ')}<br>📚 Mevcut programlar: ${availablePrograms.join(', ')}<br>🎯 Mevcut kabul tipleri: ${availableTypes.join(', ')}<br>🌍 Mevcut vatandaşlık: ${availableCitizenship.join(', ')}`);
+          }, 1000);
+        }
+        
+      } catch (error) {
+        console.error('Error in form submission:', error);
+        conversationalForm.addRobotChatResponse("❌ Hesaplama sırasında bir hata oluştu. Lütfen tekrar deneyin.");
+      }
+    }
+
+    // Display detailed results in chat
+    function displayResultsInChat(result) {
+      const { currency, finalTuitionFee, finalTuitionFall, finalTuitionSpring, paymentMethod } = result;
+      
+      // Start with calculation header
+      setTimeout(() => {
+        conversationalForm.addRobotChatResponse("📊 <strong>Ücret Hesaplama Detayları</strong>");
+      }, 500);
+
+      // Show base information
+      setTimeout(() => {
+        conversationalForm.addRobotChatResponse(`📅 <strong>Kabul Yılı:</strong> ${result.selections.admitYear}<br>📚 <strong>Program:</strong> ${result.selections.academicProgram}<br>🎯 <strong>Kabul Tipi:</strong> ${result.selections.admitType}<br>🌍 <strong>Vatandaşlık:</strong> ${result.selections.citizenship}`);
+      }, 1000);
+
+      // Show discounts if any applied
+      let discountDelay = 1500;
+      if (result.lysDiscountAmount > 0) {
+        setTimeout(() => {
+          conversationalForm.addRobotChatResponse(`🎓 <strong>LYS Bursu (%${result.lysDiscountPercentage}):</strong><br><span style="color: #28a745;">-${result.lysDiscountAmount.toLocaleString()} ${currency} indirim</span>`);
+        }, discountDelay);
+        discountDelay += 500;
+      }
+
+      if (result.waiverDiscountAmount > 0) {
+        setTimeout(() => {
+          conversationalForm.addRobotChatResponse(`💼 <strong>Muafiyet İndirimi (%${result.waiverDiscountPercentage}):</strong><br><span style="color: #28a745;">-${result.waiverDiscountAmount.toLocaleString()} ${currency} indirim</span>`);
+        }, discountDelay);
+        discountDelay += 500;
+      }
+
+      if (result.siblingDiscountAmount > 0) {
+        setTimeout(() => {
+          conversationalForm.addRobotChatResponse(`👨‍👩‍👧‍👦 <strong>Kardeş İndirimi (%${result.siblingDiscountPercentage}):</strong><br><span style="color: #28a745;">-${result.siblingDiscountAmount.toLocaleString()} ${currency} indirim</span>`);
+        }, discountDelay);
+        discountDelay += 500;
+      }
+
+      // Show payment breakdown
+      if (paymentMethod === 'Installments') {
+        setTimeout(() => {
+          conversationalForm.addRobotChatResponse(`💳 <strong>Taksitli Ödeme Detayları:</strong><br><br>🍂 <strong>Güz Dönemi:</strong> ${finalTuitionFall.toLocaleString()} ${currency}<br>🌸 <strong>Bahar Dönemi:</strong> ${finalTuitionSpring.toLocaleString()} ${currency}<br><br>💰 <strong>Toplam Yıllık Ücret:</strong> <span style="color: #A6192E; font-size: 18px;">${finalTuitionFee.toLocaleString()} ${currency}</span>`);
+        }, discountDelay);
+      } else {
+        const singlePaymentDiscount = Math.round(finalTuitionFee * 0.03); // 3% early payment discount
+        const singlePaymentAmount = finalTuitionFee - singlePaymentDiscount;
+        
+        setTimeout(() => {
+          conversationalForm.addRobotChatResponse(`💰 <strong>Peşin Ödeme Detayları:</strong><br><br>📋 <strong>Taksitli Tutar:</strong> ${finalTuitionFee.toLocaleString()} ${currency}<br>🎁 <strong>Peşin İndirimi (%3):</strong> <span style="color: #28a745;">-${singlePaymentDiscount.toLocaleString()} ${currency}</span><br><br>✅ <strong>Peşin Ödeme Tutarı:</strong> <span style="color: #A6192E; font-size: 18px;">${singlePaymentAmount.toLocaleString()} ${currency}</span>`);
+        }, discountDelay);
+      }
+
+      // Final summary and new calculation option
+      setTimeout(() => {
+        const finalAmount = paymentMethod === 'Single Payment' 
+          ? finalTuitionFee - Math.round(finalTuitionFee * 0.03)
+          : finalTuitionFee;
+        
+        conversationalForm.addRobotChatResponse(`🎉 <strong>Hesaplama Tamamlandı!</strong><br><br>Toplam ${paymentMethod === 'Single Payment' ? 'peşin ödeme' : 'taksitli ödeme'} tutarınız: <strong style="color: #A6192E; font-size: 20px;">${finalAmount.toLocaleString()} ${currency}</strong><br><br>🔄 Yeni bir hesaplama yapmak için sayfayı yenileyebilirsiniz.`);
+      }, discountDelay + 500);
+    }
+
+    // Calculate tuition fee with all discounts
+    function calculateTuitionFee(selections, matchingData) {
+      const currency = matchingData.Currency;
+      const currencySymbol = currency === 'Turkish Lira' ? 'TL' : 
+                            currency === 'US Dollar' ? 'USD' : currency;
+      
+      // Base tuition fees
+      let baseTuitionFee = matchingData.Tuition_Fee;
+      let baseTuitionFall = matchingData.Tuition_Fall;
+      let baseTuitionSpring = matchingData.Tuition_Spring;
+      
+      // Calculate LYS Scholarship discount
+      let lysDiscountPercentage = 0;
+      if (selections.admitType === 'LYS' && selections.lysScholarship !== 'None') {
+        switch (selections.lysScholarship) {
+          case '25%': lysDiscountPercentage = 25; break;
+          case '50%': lysDiscountPercentage = 50; break;
+          case '75%': lysDiscountPercentage = 75; break;
+        }
+      }
+      
+      // Apply LYS discount
+      const lysDiscountAmount = Math.round(baseTuitionFee * (lysDiscountPercentage / 100));
+      const afterLysDiscountFee = baseTuitionFee - lysDiscountAmount;
+      const afterLysDiscountFall = Math.round(baseTuitionFall * (1 - lysDiscountPercentage / 100));
+      const afterLysDiscountSpring = Math.round(baseTuitionSpring * (1 - lysDiscountPercentage / 100));
+      
+      // Calculate Waiver discount
+      let waiverDiscountPercentage = 0;
+      switch (selections.waivers) {
+        case 'Koç Group Retiree': waiverDiscountPercentage = 10; break;
+        case 'Koç Group Employee': waiverDiscountPercentage = 20; break;
+      }
+      
+      // Apply waiver discount
+      const waiverDiscountAmount = Math.round(afterLysDiscountFee * (waiverDiscountPercentage / 100));
+      const afterWaiverDiscountFee = afterLysDiscountFee - waiverDiscountAmount;
+      const afterWaiverDiscountFall = Math.round(afterLysDiscountFall * (1 - waiverDiscountPercentage / 100));
+      const afterWaiverDiscountSpring = Math.round(afterLysDiscountSpring * (1 - waiverDiscountPercentage / 100));
+      
+      // Calculate Sibling discount (10%)
+      let siblingDiscountPercentage = selections.siblingDiscount === 'Yes' ? 10 : 0;
+      const siblingDiscountAmount = Math.round(afterWaiverDiscountFee * (siblingDiscountPercentage / 100));
+      const finalTuitionFee = afterWaiverDiscountFee - siblingDiscountAmount;
+      const finalTuitionFall = Math.round(afterWaiverDiscountFall * (1 - siblingDiscountPercentage / 100));
+      const finalTuitionSpring = Math.round(afterWaiverDiscountSpring * (1 - siblingDiscountPercentage / 100));
+
+      return {
+        selections,
+        currency: currencySymbol,
+        baseTuitionFee,
+        lysDiscountPercentage,
+        lysDiscountAmount,
+        waiverDiscountPercentage,
+        waiverDiscountAmount,
+        siblingDiscountPercentage,
+        siblingDiscountAmount,
+        finalTuitionFee,
+        finalTuitionFall,
+        finalTuitionSpring,
+        paymentMethod: selections.paymentMethods
+      };
+    }
+
+    // Display results
+    function displayResults(result) {
+      const { currency, finalTuitionFee, finalTuitionFall, finalTuitionSpring, paymentMethod } = result;
+      
+      let resultsHTML = `
+        <div class="result-summary">
+          <h3>📊 Ücret Hesaplama Sonucu</h3>
+      `;
+
+      // Show breakdown of discounts if any applied
+      if (result.lysDiscountAmount > 0) {
+        resultsHTML += `
+          <div class="result-item">
+            <span>LYS Bursu (%${result.lysDiscountPercentage}):</span>
+            <span style="color: green;">-${result.lysDiscountAmount.toLocaleString()} ${currency}</span>
+          </div>
+        `;
+      }
+
+      if (result.waiverDiscountAmount > 0) {
+        resultsHTML += `
+          <div class="result-item">
+            <span>Muafiyet İndirimi (%${result.waiverDiscountPercentage}):</span>
+            <span style="color: green;">-${result.waiverDiscountAmount.toLocaleString()} ${currency}</span>
+          </div>
+        `;
+      }
+
+      if (result.siblingDiscountAmount > 0) {
+        resultsHTML += `
+          <div class="result-item">
+            <span>Kardeş İndirimi (%${result.siblingDiscountPercentage}):</span>
+            <span style="color: green;">-${result.siblingDiscountAmount.toLocaleString()} ${currency}</span>
+          </div>
+        `;
+      }
+
+      // Payment method specific display
+      if (paymentMethod === 'Installments') {
+        resultsHTML += `
+          <div class="result-item">
+            <span>Güz Dönemi:</span>
+            <span>${finalTuitionFall.toLocaleString()} ${currency}</span>
+          </div>
+          <div class="result-item">
+            <span>Bahar Dönemi:</span>
+            <span>${finalTuitionSpring.toLocaleString()} ${currency}</span>
+          </div>
+          <div class="result-item">
+            <span><strong>Toplam Yıllık Ücret (Taksitli):</strong></span>
+            <span><strong>${finalTuitionFee.toLocaleString()} ${currency}</strong></span>
+          </div>
+        `;
+      } else {
+        const singlePaymentDiscount = Math.round(finalTuitionFee * 0.03); // 3% early payment discount
+        const singlePaymentAmount = finalTuitionFee - singlePaymentDiscount;
+        
+        resultsHTML += `
+          <div class="result-item">
+            <span>Taksitli Ödeme Tutarı:</span>
+            <span>${finalTuitionFee.toLocaleString()} ${currency}</span>
+          </div>
+          <div class="result-item">
+            <span>Peşin Ödeme İndirimi (%3):</span>
+            <span style="color: green;">-${singlePaymentDiscount.toLocaleString()} ${currency}</span>
+          </div>
+          <div class="result-item">
+            <span><strong>Peşin Ödeme Tutarı:</strong></span>
+            <span><strong>${singlePaymentAmount.toLocaleString()} ${currency}</strong></span>
+          </div>
+        `;
+      }
+
+      resultsHTML += `
+        </div>
+        <div style="text-align: center; margin: 20px;">
+          <button onclick="location.reload()" style="background: #A6192E; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 16px;">
+            🔄 Yeni Hesaplama
+          </button>
+        </div>
+      `;
+
+      // Display results
+      document.getElementById('results-container').innerHTML = resultsHTML;
+      document.getElementById('results-container').classList.remove('hidden');
+    }
+  </script>
+
+</body>
+</html>

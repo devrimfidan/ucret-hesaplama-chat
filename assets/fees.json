@@ -1,0 +1,442 @@
+[
+  {
+    "Admit_Year": 2024,
+    "Academic_Program": "Other",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1565000,
+    "Tuition_Fall": 782500,
+    "Tuition_Spring": 899875,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2023,
+    "Academic_Program": "Other",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1395000,
+    "Tuition_Fall": 697500,
+    "Tuition_Spring": 802125,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2022,
+    "Academic_Program": "Other",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1295000,
+    "Tuition_Fall": 647500,
+    "Tuition_Spring": 744625,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2021,
+    "Academic_Program": "Other",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1200000,
+    "Tuition_Fall": 600000,
+    "Tuition_Spring": 690000,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2020,
+    "Academic_Program": "Other",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1155000,
+    "Tuition_Fall": 577500,
+    "Tuition_Spring": 664125,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2019,
+    "Academic_Program": "Other",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1120000,
+    "Tuition_Fall": 560000,
+    "Tuition_Spring": 644000,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2018,
+    "Academic_Program": "Other",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1070000,
+    "Tuition_Fall": 535000,
+    "Tuition_Spring": 615250,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2017,
+    "Academic_Program": "Other",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1005000,
+    "Tuition_Fall": 502500,
+    "Tuition_Spring": 577875,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2016,
+    "Academic_Program": "Other",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 960000,
+    "Tuition_Fall": 480000,
+    "Tuition_Spring": 552000,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2015,
+    "Academic_Program": "Other",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 860000,
+    "Tuition_Fall": 430000,
+    "Tuition_Spring": 494500,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2024,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 2330000,
+    "Tuition_Fall": 1165000,
+    "Tuition_Spring": 1339750,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2023,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1915000,
+    "Tuition_Fall": 957500,
+    "Tuition_Spring": 1101125,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2022,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1785000,
+    "Tuition_Fall": 892500,
+    "Tuition_Spring": 1026375,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2021,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1645000,
+    "Tuition_Fall": 822500,
+    "Tuition_Spring": 945875,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2020,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1595000,
+    "Tuition_Fall": 797500,
+    "Tuition_Spring": 917125,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2019,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1545000,
+    "Tuition_Fall": 772500,
+    "Tuition_Spring": 888375,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2018,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1475000,
+    "Tuition_Fall": 737500,
+    "Tuition_Spring": 848125,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2017,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1390000,
+    "Tuition_Fall": 695000,
+    "Tuition_Spring": 799250,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2016,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1325000,
+    "Tuition_Fall": 662500,
+    "Tuition_Spring": 761875,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2015,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "LYS",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1180000,
+    "Tuition_Fall": 590000,
+    "Tuition_Spring": 678500,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2024,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 28000,
+    "Tuition_Fall": 14000,
+    "Tuition_Spring": 14000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2023,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 28000,
+    "Tuition_Fall": 14000,
+    "Tuition_Spring": 14000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2022,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 28000,
+    "Tuition_Fall": 14000,
+    "Tuition_Spring": 14000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2021,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 28000,
+    "Tuition_Fall": 14000,
+    "Tuition_Spring": 14000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2020,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 28000,
+    "Tuition_Fall": 14000,
+    "Tuition_Spring": 14000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2019,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 28000,
+    "Tuition_Fall": 14000,
+    "Tuition_Spring": 14000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2024,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1675000,
+    "Tuition_Fall": 837500,
+    "Tuition_Spring": 963125,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2023,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1530000,
+    "Tuition_Fall": 765000,
+    "Tuition_Spring": 879750,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2022,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1425000,
+    "Tuition_Fall": 712500,
+    "Tuition_Spring": 819375,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2021,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1315000,
+    "Tuition_Fall": 657500,
+    "Tuition_Spring": 756125,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2020,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1265000,
+    "Tuition_Fall": 632500,
+    "Tuition_Spring": 727375,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2019,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1245000,
+    "Tuition_Fall": 622500,
+    "Tuition_Spring": 715875,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2024,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 40000,
+    "Tuition_Fall": 20000,
+    "Tuition_Spring": 20000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2023,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 40000,
+    "Tuition_Fall": 20000,
+    "Tuition_Spring": 20000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2022,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 40000,
+    "Tuition_Fall": 20000,
+    "Tuition_Spring": 20000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2021,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 40000,
+    "Tuition_Fall": 20000,
+    "Tuition_Spring": 20000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2020,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 40000,
+    "Tuition_Fall": 20000,
+    "Tuition_Spring": 20000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2019,
+    "Academic_Program": "Other",
+    "Admit_Type": "International",
+    "Citizenship": "Other",
+    "Tuition_Fee": 40000,
+    "Tuition_Fall": 20000,
+    "Tuition_Spring": 20000,
+    "Currency": "US Dollar"
+  },
+  {
+    "Admit_Year": 2024,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 2475000,
+    "Tuition_Fall": 1237500,
+    "Tuition_Spring": 1423125,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2023,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 2070000,
+    "Tuition_Fall": 1035000,
+    "Tuition_Spring": 1190250,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2022,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1930000,
+    "Tuition_Fall": 965000,
+    "Tuition_Spring": 1109750,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2021,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1775000,
+    "Tuition_Fall": 887500,
+    "Tuition_Spring": 1020625,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2020,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1720000,
+    "Tuition_Fall": 860000,
+    "Tuition_Spring": 989000,
+    "Currency": "Turkish Lira"
+  },
+  {
+    "Admit_Year": 2019,
+    "Academic_Program": "School of Medicine",
+    "Admit_Type": "International",
+    "Citizenship": "Turkish Citizen",
+    "Tuition_Fee": 1695000,
+    "Tuition_Fall": 847500,
+    "Tuition_Spring": 974625,
+    "Currency": "Turkish Lira"
+  }
+]

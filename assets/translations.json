@@ -1,0 +1,304 @@
+{
+  "tr": {
+    "page": {
+      "title": "Ücret Hesaplama",
+      "stepCounter": "Adım {current} / {total}"
+    },
+    "steps": {
+      "step1": {
+        "title": "Temel Bilgiler",
+        "instruction": "Lütfen temel bilgilerinizi seçin."
+      },
+      "step2": {
+        "title": "Ek Seçenekler",
+        "instruction": "Burs ve indirim durumunuzu belirtin."
+      },
+      "step3": {
+        "title": "Son Detaylar",
+        "instruction": "Vatandaşlık ve ödeme bilgilerinizi tamamlayın."
+      }
+    },
+    "fields": {
+      "admitYear": {
+        "label": "Kayıt yılınızı seçin",
+        "placeholder": "Kayıt yılınızı seçin",
+        "title": "Kayıt yılınızı seçin"
+      },
+      "academicProgram": {
+        "label": "Akademik programınızı seçin",
+        "placeholder": "Akademik programınızı seçin",
+        "title": "Akademik programınızı seçin",
+        "options": {
+          "Other": "Tıp Fakültesi Dışındaki Tüm Lisans Programları",
+          "School of Medicine": "Tıp Fakültesi"
+        }
+      },
+      "admitType": {
+        "label": "Kayıt türünüzü seçin",
+        "placeholder": "Kayıt türünüzü seçin",
+        "title": "Kayıt türünüzü seçin",
+        "options": {
+          "LYS": "LYS",
+          "International": "Uluslararası"
+        }
+      },
+      "lysScholarship": {
+        "label": "LYS burs durumunuzu seçin",
+        "placeholder": "LYS burs durumunuzu seçin",
+        "title": "LYS burs durumunuzu seçin",
+        "options": {
+          "None": "Yok",
+          "25%": "25%",
+          "50%": "50%",
+          "75%": "75%"
+        }
+      },
+      "waivers": {
+        "label": "Muafiyet durumunuzu seçin",
+        "placeholder": "Muafiyet durumunuzu seçin",
+        "title": "Muafiyet durumunuzu seçin",
+        "options": {
+          "None": "Yok",
+          "Koç Group Retiree": "Koç Grubu Emeklisi",
+          "Koç Group Employee": "Koç Grubu Çalışanı",
+          "Koç University Employee": "Koç Üniversitesi Çalışanı",
+          "Koç University Retiree": "Koç Üniversitesi Emeklisi"
+        }
+      },
+      "siblingDiscount": {
+        "label": "Kardeş indirimi durumunuzu seçin",
+        "placeholder": "Kardeş indirimi durumunuzu seçin",
+        "title": "Kardeş indirimi durumunuzu seçin",
+        "options": {
+          "No": "Hayır",
+          "Yes": "Evet"
+        }
+      },
+      "citizenship": {
+        "label": "Vatandaşlık durumunuzu seçin",
+        "placeholder": "Vatandaşlık durumunuzu seçin",
+        "title": "Vatandaşlık durumunuzu seçin",
+        "options": {
+          "Turkish Citizen": "Türk Vatandaşı",
+          "Other": "Diğer"
+        }
+      },
+      "paymentMethods": {
+        "label": "Ödeme yönteminizi seçin",
+        "placeholder": "Ödeme yönteminizi seçin",
+        "title": "Ödeme yönteminizi seçin",
+        "options": {
+          "Installment": "Taksitli",
+          "Single Payment": "Tek Ödeme"
+        }
+      }
+    },
+    "buttons": {
+      "next": "Devam Et",
+      "back": "Geri",
+      "calculate": "Sonucu Hesapla",
+      "startOver": "Yeniden Hesapla",
+      "testFile": "🔍 Dosyayı Test Et"
+    },
+    "results": {
+      "title": "🎉 Ücret Hesaplama Sonucu",
+      "subtitle": "İşte 2025 Güz dönemi için toplam ücretiniz:",
+      "fields": {
+        "admitYear": "Kabul Yılı",
+        "academicProgram": "Akademik Program",
+        "admitType": "Kabul Tipi",
+        "lysScholarship": "LYS Bursu",
+        "waivers": "Muafiyetler",
+        "siblingDiscount": "Kardeş İndirimi",
+        "citizenship": "Vatandaşlık",
+        "paymentMethods": "Ödeme Yöntemi",
+        "originalFee": "Orijinal Ücret",
+        "lysDiscount": "LYS Bursu İndirimi",
+        "waiverDiscount": "Muafiyet İndirimi",
+        "siblingDiscountLabel": "Kardeş İndirimi",
+        "totalDiscount": "Toplam İndirim",
+        "totalTuitionFee": "TOPLAM EĞİTİM ÜCRETİ",
+        "fallSemesterFee": "Güz Dönemi Ücreti",
+        "springSemesterFee": "Bahar Dönemi Ücreti",
+        "totalAnnualFee": "TOPLAM YILLIK ÜCRET",
+        "note": "Not",
+        "installmentNotAvailable": "Taksitli ödeme bilgisi mevcut değil"
+      },
+      "warning": "Uyarı",
+      "noDataFound": "Seçimlerinize uygun ücret bilgisi bulunamadı."
+    },
+    "loading": {
+      "title": "Veriler yükleniyor...",
+      "troubleshooting": {
+        "title": "🛠️ Sorun Giderme Rehberi",
+        "description": "Dosya yükleme hatası alıyorsanız:",
+        "steps": [
+          "fees.json dosyasının assets klasöründe olduğunu kontrol edin",
+          "Dosyayı doğrudan tarayıcıda açmak yerine web sunucusu kullanın",
+          "Live Server uzantısını kullanarak localhost üzerinden çalıştırın",
+          "JSON dosyasının geçerli format olduğunu kontrol edin",
+          "Dosya izinlerini kontrol edin"
+        ],
+        "fileUsed": "Kullanılan dosya:"
+      }
+    },
+    "language": {
+      "switch": "English",
+      "current": "Türkçe"
+    },
+    "disclaimer": {
+      "text": "Bu araç yalnızca bilgilendirme amaçlıdır. Resmi ücret bilgileri için üniversite ile iletişime geçiniz."
+    }
+  },
+  "en": {
+    "page": {
+      "title": "Tuition Calculator",
+      "stepCounter": "Step {current} / {total}"
+    },
+    "steps": {
+      "step1": {
+        "title": "Basic Information",
+        "instruction": "Please select your basic information."
+      },
+      "step2": {
+        "title": "Additional Options",
+        "instruction": "Specify your scholarship and discount status."
+      },
+      "step3": {
+        "title": "Final Details",
+        "instruction": "Complete your citizenship and payment information."
+      }
+    },
+    "fields": {
+      "admitYear": {
+        "label": "Select your admission year",
+        "placeholder": "Select your admission year",
+        "title": "Select your admission year"
+      },
+      "academicProgram": {
+        "label": "Select your academic program",
+        "placeholder": "Select your academic program",
+        "title": "Select your academic program",
+        "options": {
+          "Other": "Other",
+          "School of Medicine": "School of Medicine"
+        }
+      },
+      "admitType": {
+        "label": "Select your admission type",
+        "placeholder": "Select your admission type",
+        "title": "Select your admission type",
+        "options": {
+          "LYS": "LYS",
+          "International": "International"
+        }
+      },
+      "lysScholarship": {
+        "label": "Select your LYS scholarship status",
+        "placeholder": "Select your LYS scholarship status",
+        "title": "Select your LYS scholarship status",
+        "options": {
+          "None": "None",
+          "25%": "25%",
+          "50%": "50%",
+          "75%": "75%"
+        }
+      },
+      "waivers": {
+        "label": "Select your waiver status",
+        "placeholder": "Select your waiver status",
+        "title": "Select your waiver status",
+        "options": {
+          "None": "None",
+          "Koç Group Retiree": "Koç Group Retiree",
+          "Koç Group Employee": "Koç Group Employee",
+          "Koç University Employee": "Koç University Employee",
+          "Koç University Retiree": "Koç University Retiree"
+        }
+      },
+      "siblingDiscount": {
+        "label": "Select your sibling discount status",
+        "placeholder": "Select your sibling discount status",
+        "title": "Select your sibling discount status",
+        "options": {
+          "No": "No",
+          "Yes": "Yes"
+        }
+      },
+      "citizenship": {
+        "label": "Select your citizenship",
+        "placeholder": "Select your citizenship",
+        "title": "Select your citizenship",
+        "options": {
+          "Turkish Citizen": "Turkish Citizen",
+          "Other": "Other"
+        }
+      },
+      "paymentMethods": {
+        "label": "Select your payment method",
+        "placeholder": "Select your payment method",
+        "title": "Select your payment method",
+        "options": {
+          "Installment": "Installment",
+          "Single Payment": "Single Payment"
+        }
+      }
+    },
+    "buttons": {
+      "next": "Continue",
+      "back": "Back",
+      "calculate": "Calculate Result",
+      "startOver": "Calculate Again",
+      "testFile": "🔍 Test File"
+    },
+    "results": {
+      "title": "🎉 Tuition Calculation Result",
+      "subtitle": "Here is your total tuition for Fall 2025 semester:",
+      "fields": {
+        "admitYear": "Admission Year",
+        "academicProgram": "Academic Program",
+        "admitType": "Admission Type",
+        "lysScholarship": "LYS Scholarship",
+        "waivers": "Waivers",
+        "siblingDiscount": "Sibling Discount",
+        "citizenship": "Citizenship",
+        "paymentMethods": "Payment Method",
+        "originalFee": "Original Fee",
+        "lysDiscount": "LYS Scholarship Discount",
+        "waiverDiscount": "Waiver Discount",
+        "siblingDiscountLabel": "Sibling Discount",
+        "totalDiscount": "Total Discount",
+        "totalTuitionFee": "TOTAL TUITION FEE",
+        "fallSemesterFee": "Fall Semester Fee",
+        "springSemesterFee": "Spring Semester Fee",
+        "totalAnnualFee": "TOTAL ANNUAL FEE",
+        "note": "Note",
+        "installmentNotAvailable": "Installment payment information not available"
+      },
+      "warning": "Warning",
+      "noDataFound": "No tuition information found matching your selections."
+    },
+    "loading": {
+      "title": "Loading data...",
+      "troubleshooting": {
+        "title": "🛠️ Troubleshooting Guide",
+        "description": "If you're getting a file loading error:",
+        "steps": [
+          "Check that fees.json file is in the assets folder",
+          "Use a web server instead of opening the file directly in browser",
+          "Use Live Server extension to run via localhost",
+          "Check that JSON file format is valid",
+          "Check file permissions"
+        ],
+        "fileUsed": "File used:"
+      }
+    },
+    "language": {
+      "switch": "Türkçe",
+      "current": "English"
+    },
+    "disclaimer": {
+      "text": "This tool is for informational purposes only. Please contact the university for official tuition information."
+    }
+  }
+}
