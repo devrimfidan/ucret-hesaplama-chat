@@ -70,14 +70,13 @@ ucret-hesaplama-chat/
 
 #### İndirim ve Burslar
 - **LYS Bursu**: %25, %50, %75 oranlarında
-- **Koç Grubu Çalışanı**: %20 indirim
-- **Koç Grubu Emeklisi**: %10 indirim
-- **Kardeş İndirimi**: %10 indirim
-- **Peşin Ödeme**: %3 indirim
+- **Koç Grubu Çalışanı**
+- **Koç Grubu Emeklisi**
+- **Kardeş İndirimi**
 
 #### Hesaplama Formülü
 ```
-Son Ücret = (Temel Ücret - LYS Bursu - Koç Grubu İndirimi - Kardeş İndirimi) - Peşin İndirimi
+Son Ücret = Temel Ücret - LYS Bursu - Koç Grubu İndirimi - Kardeş İndirimi
 ```
 
 ## 🛠️ Geliştirme
