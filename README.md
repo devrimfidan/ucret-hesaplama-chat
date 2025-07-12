@@ -6,10 +6,11 @@ Bu proje, Koç Üniversitesi öğrencilerinin öğrenim ücretlerini hesaplamala
 
 ### ✨ Sohbet Arayüzü
 - **Konuşma Temelli Form**: Adım adım sohbet ederek bilgilerinizi girebilirsiniz
-- **Akıllı Mantık**: LYS dışında kabul edilenler için LYS burs sorusu atlanır
+- **Akıllı Mantık**: Uluslararası öğrenciler için LYS burs sorusu atlanır
 - **Gerçek Zamanlı Hesaplama**: Bilgileriniz tamamlandığında otomatik hesaplama
 - **Detaylı Sonuçlar**: İndirimler ve ödeme seçenekleri ayrıntılı olarak gösterilir
 - **Mobil Uyumlu**: Tüm cihazlarda sorunsuz çalışır
+- **KU Hub Entegrasyonu**: Floating chat widget ile kolay erişim
 
 ### 🔧 Teknik Özellikler
 - **Conversational Form Kütüphanesi**: Modern chat arayüzü
@@ -22,6 +23,7 @@ Bu proje, Koç Üniversitesi öğrencilerinin öğrenim ücretlerini hesaplamala
 ```
 ucret-hesaplama-chat/
 ├── index.html              # Ana sohbet arayüzü
+├── kuhub.html              # KU Hub entegrasyonu (chat widget ile)
 ├── README.md               # Proje dokümantasyonu
 └── assets/
     ├── fees.js             # Ücret hesaplama mantığı
@@ -32,6 +34,7 @@ ucret-hesaplama-chat/
 ### 📄 Dosya Açıklamaları
 
 - **`index.html`**: Ana uygulama dosyası. Sohbet arayüzü ve tüm stil/script kodlarını içerir
+- **`kuhub.html`**: KU Hub sistemi entegrasyonu. Floating chat widget ile ücret hesaplayıcıya erişim
 - **`assets/fees.js`**: Ücret hesaplama algoritmaları ve iş mantığı
 - **`assets/fees.json`**: Yıllara göre ücret verileri ve program bilgileri
 - **`assets/translations.json`**: Uygulama metinleri ve çeviri verileri
@@ -40,25 +43,40 @@ ucret-hesaplama-chat/
 
 ### Hızlı Başlangıç
 1. Projeyi bilgisayarınıza indirin
-2. `index.html` dosyasını tarayıcıda açın
-3. Sohbet asistanı ile konuşarak ücretinizi hesaplayın
+2. `index.html` dosyasını tarayıcıda açın (doğrudan kullanım)
+3. Veya `kuhub.html` dosyasını açın (KU Hub entegrasyonu ile)
+4. Sohbet asistanı ile konuşarak ücretinizi hesaplayın
 
 ### Geliştirme Ortamı
 1. **Live Server** kullanarak proje klasörünü açın (önerilir)
 2. Veya herhangi bir web sunucusu ile `index.html` dosyasını servis edin
 3. Tarayıcıda `http://localhost:port` adresini açın
 
+## 💬 Chat Widget Entegrasyonu
+
+### KU Hub Sistemi
+- **Floating Widget**: Sağ alt köşede sabit chat ikonu
+- **Modal Arayüz**: Tam ekran modal pencerede ücret hesaplayıcı
+- **Kolay Erişim**: Tek tıkla ücret hesaplama aracına ulaşım
+- **Seamless UX**: Ana sayfa deneyimini bozmayan entegrasyon
+
+### Widget Özellikleri
+- **Responsive Tasarım**: Mobil ve masaüstü uyumlu modal
+- **ESC Tuşu Desteği**: Hızlı kapatma
+- **Overlay Desteği**: Modal dışına tıklayarak kapatma
+- **İframe Entegrasyonu**: Güvenli ve izole çalışma ortamı
+
 ## 📋 Ücret Hesaplama Süreci
 
 ### Sohbet Akışı
 1. **Hoş geldin mesajı** ve kullanım talimatları
-2. **Kabul yılı** seçimi (2015-2024 arası)
-3. **Akademik program** belirleme (Genel Programlar/Tıp Fakültesi)
-4. **Kabul türü** seçimi (LYS/Uluslararası Öğrenci)
+2. **Kayıt yılı** seçimi (2015-2024 arası)
+3. **Akademik program** belirleme (Tıp Fakültesi Dışındaki Tüm Lisans Programları/Tıp Fakültesi)
+4. **Kayıt türü** seçimi (LYS/Uluslararası Öğrenci) - Uluslararası öğrenciler için LYS burs sorusu atlanır
 5. **LYS bursu** oranı (sadece LYS öğrencileri için)
 6. **Koç Grubu bağlantısı** (Çalışan/Emekli/Hiçbiri)
 7. **Kardeş indirimi** durumu
-8. **Vatandaşlık** bilgisi
+8. **Vatandaşlık** bilgisi (Türk Vatandaşı/Diğer)
 9. **Ödeme yöntemi** tercihi (Peşin/Taksitli)
 10. **Sonuç hesaplama** ve detaylı gösterim
 

@@ -104,9 +104,9 @@
       "title": "🎉 Ücret Hesaplama Sonucu",
       "subtitle": "İşte 2025 Güz dönemi için toplam ücretiniz:",
       "fields": {
-        "admitYear": "Kabul Yılı",
+        "admitYear": "Kayıt Yılı",
         "academicProgram": "Akademik Program",
-        "admitType": "Kabul Tipi",
+        "admitType": "Kayıt Türü",
         "lysScholarship": "LYS Bursu",
         "waivers": "Muafiyetler",
         "siblingDiscount": "Kardeş İndirimi",
@@ -171,23 +171,23 @@
     },
     "fields": {
       "admitYear": {
-        "label": "Select your admission year",
-        "placeholder": "Select your admission year",
-        "title": "Select your admission year"
+        "label": "Select your registration year",
+        "placeholder": "Select your registration year",
+        "title": "Select your registration year"
       },
       "academicProgram": {
         "label": "Select your academic program",
         "placeholder": "Select your academic program",
         "title": "Select your academic program",
         "options": {
-          "Other": "Other",
+          "Other": "All Undergraduate Programs Except School of Medicine",
           "School of Medicine": "School of Medicine"
         }
       },
       "admitType": {
-        "label": "Select your admission type",
-        "placeholder": "Select your admission type",
-        "title": "Select your admission type",
+        "label": "Select your registration type",
+        "placeholder": "Select your registration type",
+        "title": "Select your registration type",
         "options": {
           "LYS": "LYS",
           "International": "International"
@@ -255,9 +255,9 @@
       "title": "🎉 Tuition Calculation Result",
       "subtitle": "Here is your total tuition for Fall 2025 semester:",
       "fields": {
-        "admitYear": "Admission Year",
+        "admitYear": "Registration Year",
         "academicProgram": "Academic Program",
-        "admitType": "Admission Type",
+        "admitType": "Registration Type",
         "lysScholarship": "LYS Scholarship",
         "waivers": "Waivers",
         "siblingDiscount": "Sibling Discount",

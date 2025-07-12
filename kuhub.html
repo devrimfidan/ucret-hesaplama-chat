@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KU Campus Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
+        }
+        /* Custom scrollbar for the sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: #1e1e2d; /* Match sidebar background */
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        /* Revised Ribbon style for highlighted service labels - now a straight tag */
+        .highlighted-card {
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 3rem; /* Add padding to make space for the tag at the bottom */
+        }
+
+        .ribbon-label-inner {
+            position: absolute;
+            bottom: 0; /* Position at the very bottom */
+            right: 0; /* Position at the very right */
+            background-color: #00bfff; /* Bright blue for the tag */
+            color: white;
+            padding: 0.25rem 0.75rem;
+            font-weight: bold;
+            font-size: 0.75rem; /* text-xs */
+            border-top-left-radius: 0.5rem; /* Rounded top-left corner */
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            z-index: 10;
+        }
+
+        /* Chat Widget Styles */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a0dad, #8a2be2);
+            box-shadow: 0 4px 12px rgba(106, 13, 173, 0.3);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(106, 13, 173, 0.4);
+        }
+
+        .chat-toggle i {
+            color: white;
+            font-size: 24px;
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 400px;
+            height: 600px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 999;
+        }
+
+        .chat-window.open {
+            display: flex;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #6a0dad, #8a2be2);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .chat-header p {
+            margin: 2px 0 0 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .chat-content {
+            flex: 1;
+            overflow: hidden;
+            background: white;
+            border-radius: 16px;
+        }
+
+        .chat-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        .minimize-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+        }
+
+        .minimize-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 480px) {
+            .chat-window {
+                width: calc(100vw - 40px);
+                height: calc(100vh - 120px);
+                right: 20px;
+                left: 20px;
+                bottom: 90px;
+            }
+        }
+
+        /* Chat toggle notification badge */
+        .chat-notification {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+    <!-- Left Sidebar -->
+    <!-- Added id="sidebar" and initial hidden class for mobile, md:flex to show on medium+ screens -->
+    <aside id="sidebar" class="sidebar w-64 bg-[#1e1e2d] text-white flex-col rounded-r-lg overflow-y-auto shadow-lg hidden md:flex">
+        <!-- Logo Area: Centered horizontally and height adjusted to match top header -->
+        <div class="h-16 flex items-center justify-center border-b border-gray-700">
+            <!-- Updated Logo: Made 60px height -->
+            <img src="https://campus.hub.ku.edu.tr/img/logos/KUHUB-campus.png" alt="KU Campus Hub Logo" style="height: 60px;" class="object-contain">
+        </div>
+        <nav class="mt-4 flex-grow">
+            <h3 class="text-sm font-semibold uppercase text-gray-400 px-4 mb-2">Home</h3>
+            <a href="#" class="flex items-center px-4 py-2 bg-[#775faa] text-white">
+                <i class="fas fa-home mr-3"></i>
+                Home
+            </a>
+
+            <h3 class="text-sm font-semibold uppercase text-gray-400 px-4 mt-6 mb-2">Services</h3>
+            <ul class="space-y-1">
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-chalkboard-teacher mr-3"></i>
+                        Teaching & Learning
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-user-graduate mr-3"></i>
+                        Student Affairs
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-building mr-3"></i>
+                        Academic Administration
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-laptop-code mr-3"></i>
+                        Information Technology
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-users mr-3"></i>
+                        Employee Center
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-dollar-sign mr-3"></i>
+                        Finance & Procurement
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-flask mr-3"></i>
+                        Research & Innovation
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-bed mr-3"></i>
+                        Dorms & Housing
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-bus mr-3"></i>
+                        Campus Services
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-calendar-alt mr-3"></i>
+                        Campus Agenda
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <h3 class="text-sm font-semibold uppercase text-gray-400 px-4 mt-6 mb-2">Help & Support</h3>
+            <ul class="space-y-1">
+                <li>
+                    <a href="#" class="flex items-center px-4 py-2 hover:bg-[#775faa] transition-colors duration-200">
+                        <i class="fas fa-question-circle mr-3"></i>
+                        About
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col">
+        <!-- Top Header -->
+        <header class="bg-white shadow-md p-4 flex items-center justify-between rounded-bl-lg">
+            <div class="flex items-center">
+                <!-- New Toggle Sidebar Button - Removed md:hidden and added bg-gray-200 for visibility -->
+                <button id="sidebarToggle" class="text-gray-600 mr-4 p-2 rounded-md bg-gray-200 hover:bg-gray-300 transition-colors duration-200">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <!-- Search Area -->
+                <div class="relative flex items-center w-full max-w-md mr-4">
+                    <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6a0dad] focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 text-gray-400"></i>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="text-gray-600 hover:text-gray-900">
+                    <i class="fas fa-bell text-xl"></i>
+                </button>
+                <div class="flex items-center">
+                    <img src="https://placehold.co/32x32/cccccc/333333?text=P" alt="User Avatar" class="w-8 h-8 rounded-full mr-2">
+                    <span class="text-gray-800 font-medium hidden sm:block">User Name</span>
+                    <i class="fas fa-chevron-down text-gray-600 ml-2 text-xs"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Sections -->
+        <main class="flex-1 p-6 overflow-y-auto">
+            <!-- Breadcrumb moved here -->
+            <div class="flex items-center space-x-2 text-gray-600 text-sm mb-4">
+                <i class="fas fa-globe"></i>
+                <span>KU Web</span>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span>KU Hub</span>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span>Home</span>
+            </div>
+
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Home</h1>
+                <!-- Import Report button: Changed radius -->
+                <button class="bg-[#6a0dad] text-white px-4 py-2 rounded-lg text-sm font-medium shadow-md hover:bg-[#5a0ca0] transition-colors duration-200 hidden md:block">
+                    Import Report
+                </button>
+            </div>
+
+            <!-- Highlighted Services -->
+            <section class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Highlighted Services</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Highlighted Service 1: My Teaching (Instructor) -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between border-l-4 border-[#6a0dad] highlighted-card">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">My Teaching (Instructor)</h3>
+                                <p class="text-sm text-gray-600 mt-2">Manage your courses, assignments, and student interactions.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-chalkboard-teacher text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                        <span class="ribbon-label-inner">BETA</span>
+                    </div>
+
+                    <!-- Highlighted Service 2: Facility Reservations -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between border-l-4 border-[#6a0dad] highlighted-card">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Facility Reservations</h3>
+                                <p class="text-sm text-gray-600 mt-2">Book rooms, labs, and other campus facilities.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-calendar-check text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                        <span class="ribbon-label-inner">NEW</span>
+                    </div>
+
+                    <!-- Highlighted Service 3: Schedule of Classes -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between border-l-4 border-[#6a0dad] highlighted-card">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Schedule of Classes</h3>
+                                <p class="text-sm text-gray-600 mt-2">View the current academic schedule and course offerings.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-book-open text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                        <span class="ribbon-label-inner">NEW</span>
+                    </div>
+
+                    <!-- Highlighted Service 4: Academic Progress Tracker -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between border-l-4 border-[#6a0dad] highlighted-card">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Academic Progress Tracker</h3>
+                                <p class="text-sm text-gray-600 mt-2">Monitor your academic standing and degree progress.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-chart-line text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                        <span class="ribbon-label-inner">NEW</span>
+                    </div>
+
+                    <!-- Highlighted Service 5: Student Profile -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between border-l-4 border-[#6a0dad] highlighted-card">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Student Profile</h3>
+                                <p class="text-sm text-gray-600 mt-2">Access and update your personal and academic information.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-user-circle text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                        <span class="ribbon-label-inner">NEW</span>
+                    </div>
+
+                    <!-- Highlighted Service 6: Request Management -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between border-l-4 border-[#6a0dad] highlighted-card">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Request Management</h3>
+                                <p class="text-sm text-gray-600 mt-2">Submit and track various administrative requests.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-tasks text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                        <span class="ribbon-label-inner">NEW</span>
+                    </div>
+
+                    <!-- Highlighted Service 7: Tuition Calculator -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between border-l-4 border-[#6a0dad] highlighted-card cursor-pointer hover:shadow-lg transition-shadow duration-200" onclick="toggleChatWidget()">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Ücret Hesaplama</h3>
+                                <p class="text-sm text-gray-600 mt-2">Öğrenim ücretinizi kolayca hesaplayın ve ödeme seçeneklerini görün.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-calculator text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                        <span class="ribbon-label-inner">NEW</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Grid -->
+            <section class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Services</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Service Card 1: Teaching & Learning -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Teaching & Learning</h3>
+                                <p class="text-sm text-gray-600 mt-2">Access course materials, grades, and academic resources.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-pencil-alt text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Service Card 2: Student Affairs -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Student Affairs</h3>
+                                <p class="text-sm text-gray-600 mt-2">Find support services, clubs, and student life information.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-user-graduate text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Service Card 3: Academic Administration -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Academic Administration</h3>
+                                <p class="text-sm text-gray-600 mt-2">Manage registrations, transcripts, and academic records.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-building text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Service Card 4: Information Technology -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Information Technology</h3>
+                                <p class="text-sm text-gray-600 mt-2">Get IT support, software, and network access.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-laptop-code text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Service Card 5: Employee Center -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Employee Center</h3>
+                                <p class="text-sm text-gray-600 mt-2">Resources for faculty and staff, including HR and payroll.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-users text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Service Card 6: Finance & Procurement -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Finance & Procurement</h3>
+                                <p class="text-sm text-gray-600 mt-2">Manage financial transactions and procurement requests.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-dollar-sign text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Service Card 7: Research & Innovation -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Research & Innovation</h3>
+                                <p class="text-sm text-gray-600 mt-2">Support for research projects, grants, and innovation initiatives.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-flask text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Service Card 8: Dorms & Housing -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Dorms & Housing</h3>
+                                <p class="text-sm text-gray-600 mt-2">Information on campus dormitories and housing applications.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-bed text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Service Card 9: Campus Services -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Campus Services</h3>
+                                <p class="text-sm text-gray-600 mt-2">Details on transportation, dining, and other campus facilities.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-bus text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Service Card 10: Campus Agenda -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-start w-full mb-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-800">Campus Agenda</h3>
+                                <p class="text-sm text-gray-600 mt-2">View upcoming events, academic deadlines, and important dates.</p>
+                            </div>
+                            <div class="bg-[#e0e0f8] p-3 rounded-full flex-shrink-0 ml-4">
+                                <i class="fas fa-calendar-alt text-2xl text-[#6a0dad]"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Useful Links -->
+            <section class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Useful Links</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Link Card 1 -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-start justify-center text-center hover:shadow-lg transition-shadow duration-200" style="background-image: url('https://placehold.co/200x100/fff0e0/ff9900?text='); background-size: cover; background-position: center;">
+                        <h3 class="text-lg font-medium text-gray-800 w-full">Feedback</h3>
+                    </div>
+                    <!-- Link Card 2 -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-start justify-center text-center hover:shadow-lg transition-shadow duration-200" style="background-image: url('https://placehold.co/200x100/fff0e0/ff9900?text='); background-size: cover; background-position: center;">
+                        <h3 class="text-lg font-medium text-gray-800 w-full">Questions & Help</h3>
+                    </div>
+                    <!-- Link Card 3 -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-start justify-center text-center hover:shadow-lg transition-shadow duration-200" style="background-image: url('https://placehold.co/200x100/fff0e0/ff9900?text='); background-size: cover; background-position: center;">
+                        <h3 class="text-lg font-medium text-gray-800 w-full">App Installed in Computer Labs</h3>
+                    </div>
+                    <!-- Link Card 4 -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-start justify-center text-center hover:shadow-lg transition-shadow duration-200" style="background-image: url('https://placehold.co/200x100/fff0e0/ff9900?text='); background-size: cover; background-position: center;">
+                        <h3 class="text-lg font-medium text-gray-800 w-full">Senior Class Gift</h3>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-[#1e1e2d] text-white rounded-tl-lg mt-12 ml-2.5 mr-2.5">
+            <div class="container mx-auto px-4 py-6"> <!-- Added px-4 py-6 for internal padding -->
+                <div class="text-sm text-center md:flex md:justify-between md:items-center">
+                    <div class="flex items-center justify-center md:justify-start mb-4 md:mb-0">
+                        <!-- Updated Footer Logo -->
+                        <img src="https://campus.hub.ku.edu.tr/img/koc-university.png" alt="Koc University Logo" class="h-8 object-contain mr-2">
+                    </div>
+                    <div class="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
+                        <span>© 2025 Koç University</span>
+                        <span>Version 8.5.0</span>
+                        <a href="#" class="hover:underline text-[#8888ff]">Privacy Policy</a>
+                        <a href="#" class="hover:underline text-[#8888ff]">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <button class="chat-toggle" onclick="toggleChatWidget()" title="Ücret Hesaplama Asistanı">
+            <i class="fas fa-calculator"></i>
+            <span class="chat-notification" id="chatNotification"></span>
+        </button>
+        
+        <!-- Chat Window -->
+        <div id="chatWindow" class="chat-window">
+            <div class="chat-content">
+                <iframe id="calculatorFrame" class="chat-iframe" src="index.html" title="Ücret Hesaplama Formu"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('hidden');
+                    console.log('Sidebar toggle button clicked!'); // Log to console
+                });
+            }
+        });
+
+        // Chat Widget Functions
+        let chatOpen = false;
+
+        function toggleChatWidget() {
+            const chatWindow = document.getElementById('chatWindow');
+            const notification = document.getElementById('chatNotification');
+            
+            if (chatOpen) {
+                chatWindow.classList.remove('open');
+                chatOpen = false;
+            } else {
+                chatWindow.classList.add('open');
+                chatOpen = true;
+                // Hide notification when chat is opened
+                notification.style.display = 'none';
+                // Reload iframe to ensure fresh start
+                const iframe = document.getElementById('calculatorFrame');
+                iframe.src = iframe.src;
+            }
+        }
+
+        // Show notification after page load to attract attention
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const notification = document.getElementById('chatNotification');
+                if (notification) {
+                    notification.style.display = 'block';
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

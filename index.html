@@ -331,7 +331,7 @@
       Start
       
       <!-- Admit Year -->
-      <input cf-questions="Hangi yılda üniversiteye kabul aldınız? 🎓" 
+      <input cf-questions="Hangi yılda üniversiteye kayıt oldunuz? 🎓" 
              type="radio" name="admitYear" value="2024" cf-label="2024">
       <input type="radio" name="admitYear" value="2023" cf-label="2023">
       <input type="radio" name="admitYear" value="2022" cf-label="2022">
@@ -340,20 +340,24 @@
 
       <!-- Academic Program -->
       <input cf-questions="Harika! 📚 Hangi akademik programa kayıtlı olduğunuzu öğrenebilir miyim?" 
-             type="radio" name="academicProgram" value="Other" cf-label="Diğer Programlar">
+             type="radio" name="academicProgram" value="Other" cf-label="Tıp Fakültesi Dışındaki Tüm Lisans Programları">
       <input type="radio" name="academicProgram" value="School of Medicine" cf-label="Tıp Fakültesi">
 
       <!-- Admit Type -->
-      <input cf-questions="Mükemmel! 🎯 Kabul tipinizi belirtir misiniz?" 
+      <input cf-questions="Mükemmel! 🎯 Kayıt türünüzü belirtir misiniz?" 
              type="radio" name="admitType" value="LYS" cf-label="LYS">
       <input type="radio" name="admitType" value="International" cf-label="Uluslararası">
 
-      <!-- LYS Scholarship -->
+      <!-- LYS Scholarship - Only for LYS students -->
       <input cf-questions="LYS burs durumunuzu belirtebilir misiniz?" 
+             cf-conditional-admitType="LYS"
              type="radio" name="lysScholarship" value="None" cf-label="Burs Yok">
-      <input type="radio" name="lysScholarship" value="25%" cf-label="%25 Burs">
-      <input type="radio" name="lysScholarship" value="50%" cf-label="%50 Burs">
-      <input type="radio" name="lysScholarship" value="75%" cf-label="%75 Burs">
+      <input type="radio" name="lysScholarship" value="25%" cf-label="%25 Burs"
+             cf-conditional-admitType="LYS">
+      <input type="radio" name="lysScholarship" value="50%" cf-label="%50 Burs"
+             cf-conditional-admitType="LYS">
+      <input type="radio" name="lysScholarship" value="75%" cf-label="%75 Burs"
+             cf-conditional-admitType="LYS">
 
       <!-- Waivers -->
       <input cf-questions="Herhangi bir muafiyetiniz var mı? 💼" 
@@ -486,6 +490,7 @@
         // If not LYS student, ensure lysScholarship is 'None'
         if (selections.admitType !== 'LYS') {
           selections.lysScholarship = 'None';
+          console.log("Non-LYS student detected, setting lysScholarship to 'None'");
         }
 
         console.log("Parsed selections:", selections);
@@ -576,7 +581,7 @@
 
       // Show base information
       setTimeout(() => {
-        conversationalForm.addRobotChatResponse(`📅 <strong>Kabul Yılı:</strong> ${result.selections.admitYear}<br>📚 <strong>Program:</strong> ${result.selections.academicProgram}<br>🎯 <strong>Kabul Tipi:</strong> ${result.selections.admitType}<br>🌍 <strong>Vatandaşlık:</strong> ${result.selections.citizenship}`);
+        conversationalForm.addRobotChatResponse(`📅 <strong>Kayıt Yılı:</strong> ${result.selections.admitYear}<br>📚 <strong>Program:</strong> ${result.selections.academicProgram}<br>🎯 <strong>Kayıt Türü:</strong> ${result.selections.admitType}<br>🌍 <strong>Vatandaşlık:</strong> ${result.selections.citizenship}`);
       }, 1000);
 
       // Show discounts if any applied
@@ -608,21 +613,14 @@
           conversationalForm.addRobotChatResponse(`💳 <strong>Taksitli Ödeme Detayları:</strong><br><br>🍂 <strong>Güz Dönemi:</strong> ${finalTuitionFall.toLocaleString()} ${currency}<br>🌸 <strong>Bahar Dönemi:</strong> ${finalTuitionSpring.toLocaleString()} ${currency}<br><br>💰 <strong>Toplam Yıllık Ücret:</strong> <span style="color: #A6192E; font-size: 18px;">${finalTuitionFee.toLocaleString()} ${currency}</span>`);
         }, discountDelay);
       } else {
-        const singlePaymentDiscount = Math.round(finalTuitionFee * 0.03); // 3% early payment discount
-        const singlePaymentAmount = finalTuitionFee - singlePaymentDiscount;
-        
         setTimeout(() => {
-          conversationalForm.addRobotChatResponse(`💰 <strong>Peşin Ödeme Detayları:</strong><br><br>📋 <strong>Taksitli Tutar:</strong> ${finalTuitionFee.toLocaleString()} ${currency}<br>🎁 <strong>Peşin İndirimi (%3):</strong> <span style="color: #28a745;">-${singlePaymentDiscount.toLocaleString()} ${currency}</span><br><br>✅ <strong>Peşin Ödeme Tutarı:</strong> <span style="color: #A6192E; font-size: 18px;">${singlePaymentAmount.toLocaleString()} ${currency}</span>`);
+          conversationalForm.addRobotChatResponse(`💰 <strong>Peşin Ödeme Detayları:</strong><br><br>✅ <strong>Peşin Ödeme Tutarı:</strong> <span style="color: #A6192E; font-size: 18px;">${finalTuitionFee.toLocaleString()} ${currency}</span>`);
         }, discountDelay);
       }
 
       // Final summary and new calculation option
       setTimeout(() => {
-        const finalAmount = paymentMethod === 'Single Payment' 
-          ? finalTuitionFee - Math.round(finalTuitionFee * 0.03)
-          : finalTuitionFee;
-        
-        conversationalForm.addRobotChatResponse(`🎉 <strong>Hesaplama Tamamlandı!</strong><br><br>Toplam ${paymentMethod === 'Single Payment' ? 'peşin ödeme' : 'taksitli ödeme'} tutarınız: <strong style="color: #A6192E; font-size: 20px;">${finalAmount.toLocaleString()} ${currency}</strong><br><br>🔄 Yeni bir hesaplama yapmak için sayfayı yenileyebilirsiniz.`);
+        conversationalForm.addRobotChatResponse(`🎉 <strong>Hesaplama Tamamlandı!</strong><br><br>Toplam ${paymentMethod === 'Single Payment' ? 'peşin ödeme' : 'taksitli ödeme'} tutarınız: <strong style="color: #A6192E; font-size: 20px;">${finalTuitionFee.toLocaleString()} ${currency}</strong><br><br>🔄 Yeni bir hesaplama yapmak için sayfayı yenileyebilirsiniz.`);
       }, discountDelay + 500);
     }
 
@@ -744,21 +742,10 @@
           </div>
         `;
       } else {
-        const singlePaymentDiscount = Math.round(finalTuitionFee * 0.03); // 3% early payment discount
-        const singlePaymentAmount = finalTuitionFee - singlePaymentDiscount;
-        
         resultsHTML += `
           <div class="result-item">
-            <span>Taksitli Ödeme Tutarı:</span>
-            <span>${finalTuitionFee.toLocaleString()} ${currency}</span>
-          </div>
-          <div class="result-item">
-            <span>Peşin Ödeme İndirimi (%3):</span>
-            <span style="color: green;">-${singlePaymentDiscount.toLocaleString()} ${currency}</span>
-          </div>
-          <div class="result-item">
             <span><strong>Peşin Ödeme Tutarı:</strong></span>
-            <span><strong>${singlePaymentAmount.toLocaleString()} ${currency}</strong></span>
+            <span><strong>${finalTuitionFee.toLocaleString()} ${currency}</strong></span>
           </div>
         `;
       }
